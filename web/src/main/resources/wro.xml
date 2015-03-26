@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<groups xmlns="http://www.isdc.ro/wro">
+	<group name="main">
+
+		<css>classpath:META-INF/resources/webjars/jqgrid/${jquery.jqgrid.version}/css/ui.jqgrid.css</css>
+		<css>classpath:META-INF/resources/webjars/jquery-ui/${jquery.ui.version}/jquery-ui.css</css>
+		<css>classpath:META-INF/resources/webjars/jquery-ui-themes/${jquery.ui.themes.version}/dark-hive/jquery-ui.min.css</css>
+		<!--<css>classpath:META-INF/resources/webjars/jquery-ui-themes/${jquery.ui.themes.version}/cupertino/jquery.ui.theme.css</css>-->
+		<css>classpath:META-INF/resources/webjars/bootstrap/${bootstrap.version}/css/bootstrap.css</css>
+		<css>/styles/base.css</css>
+
+		<js>webjar:jquery/${jquery.version}/jquery.min.js</js>
+		<js>webjar:jquery-ui/${jquery.ui.version}/jquery-ui.min.js</js>
+		<js>webjar:jqgrid/${jquery.jqgrid.version}/js/jquery.jqGrid.js</js>
+		<js>webjar:jqgrid/${jquery.jqgrid.version}/js/i18n/grid.locale-en.js</js>
+		<js>webjar:bootstrap/${bootstrap.version}/js/bootstrap.js</js>
+		<js>/scripts/base.js</js>
+
+	</group>
+</groups>
