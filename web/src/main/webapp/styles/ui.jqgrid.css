@@ -82,7 +82,7 @@
 /* loading */
 .ui-jqgrid .loading {position: absolute; top: 45%;left: 45%;width: auto;z-index:101;padding: 6px; margin: 5px;text-align: center;font-weight: bold;display: none;border-width: 2px !important; font-size:11px;}
 .ui-jqgrid .jqgrid-overlay {display:none;z-index:100;}
-/* IE * html .jqgrid-overlay {width: expression(this.parentNode.offsetWidth+'px');height: expression(this.parentNode.offsetHeight+'px');} */
+/* IE * html .grid-overlay {width: expression(this.parentNode.offsetWidth+'px');height: expression(this.parentNode.offsetHeight+'px');} */
 * .jqgrid-overlay iframe {position:absolute;top:0;left:0;z-index:-1;}
 /* IE width: expression(this.parentNode.offsetWidth+'px');height: expression(this.parentNode.offsetHeight+'px');}*/
 /* end loading div */
@@ -124,7 +124,7 @@
 .fm-button-icon-right .ui-icon { left: auto; right: .2em; margin-left: 0; position: absolute; top: 50%; margin-top: -8px;}
 #nData, #pData { float: left; margin:3px;padding: 0; width: 15px; }
 /* End Eorm edit */
-/*.ui-jqgrid .edit-cell {}*/
+/*.ui-grid .edit-cell {}*/
 .ui-jqgrid .selected-row, div.ui-jqgrid .selected-row td {font-style : normal;border-left: 0 none;}
 /* inline edit actions button*/
 .ui-inline-del.ui-state-hover span, .ui-inline-edit.ui-state-hover span,

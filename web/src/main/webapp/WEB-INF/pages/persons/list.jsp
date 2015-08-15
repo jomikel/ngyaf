@@ -20,7 +20,7 @@
 
     <div class="row">
         <div class="well well-main col-lg-12 text-center">
-            <div id="griddiv" />
+            <div id="persons" />
         </div>
     </div>
 </body>

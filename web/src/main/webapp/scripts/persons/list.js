@@ -22,14 +22,20 @@ $(function() {
     ];
 
     var options = {
+        griddiv: 'persons',
+        table: 'peronsTable',
+        dataType: 'json',
         service: 'persons',
         colNames: colNames,
         colModel: colModel,
         sortname: 'firstName',
-        editType: 'popup'
+        editType: 'popup',
+        formOptions: {
+            addUrl: '/persons/new',
+            editUrl: '/persons/'
+        }
     };
 
-    options.table = 'table';
-    base.jqgrid(options);
+    zz.grid.create(options);
 
 });

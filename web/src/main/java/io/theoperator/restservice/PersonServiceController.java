@@ -45,7 +45,6 @@ public class PersonServiceController {
         public PersonList(List<Person> persons) {
             this.persons = persons;
         }
-
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -59,7 +58,7 @@ public class PersonServiceController {
         this.personService.delete(Long.valueOf(id));
     }
 
-    @RequestMapping(value = "/page", method = RequestMethod.GET)
+    @RequestMapping(value = "/page", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
     public Map<String, Object> getPage(
             @RequestParam("sidx") String sidx,
             @RequestParam("sord") String sord,

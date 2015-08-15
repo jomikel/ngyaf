@@ -16,7 +16,7 @@ import java.util.List;
 
 @Entity
 @SequenceGenerator(name = "defaultSequence", sequenceName = "personSequence", allocationSize = 1, initialValue = 1)
-@XmlRootElement(name="persons")
+@XmlRootElement(name="person")
 @XmlAccessorType(XmlAccessType.PUBLIC_MEMBER)
 public class Person extends GenericBean {
 
