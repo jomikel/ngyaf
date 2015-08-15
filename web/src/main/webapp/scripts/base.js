@@ -12,7 +12,7 @@ var base = {
         if (options.datatype == null)
             options.datatype = 'json';
 
-        options.url = '/services/' + options.service + '/page.' + options.datatype;
+        options.url = '/services/' + options.service + '/page.json';
         options.pager = options.table + 'Pager';
         options.height = 'auto';
         options.shrinkToFit = true;
@@ -22,6 +22,19 @@ var base = {
             if(data.id.substr(0, 3) == "jqg")
                 delete data.id;
             return data;
+        };
+
+        // only for form popup editing
+        var addOptions = {
+            url: '/services/' + options.service,
+            mtype: 'PUT',
+            serializeEditData: function (data) {
+                delete data.oper;
+                if(data.id == "_empty")
+                    delete data.id;
+                return data;
+            }
+
         };
 
         var deleteOptions = {
@@ -38,14 +51,10 @@ var base = {
         };
 
         var editOptions = {
-            url: '/services/' + options.service + '/',
+            url: '/services/' + options.service,
             mtype: 'PUT',
-            serializeEditData: function (rp_ge) {
-                //alert(rp_ge);
-                return JSON.stringify(rp_ge);
-            },
-            ajaxEditOptions: {
-                contentType: 'application/json; charset=utf-8'
+            serializeEditData: function (data) {
+                return data;
             }
         };
 
@@ -53,9 +62,9 @@ var base = {
             del: true,
             add: false,
             position: 'left',
-            cloneToTop: false
-            //search: false,
-            //view: false,
+            cloneToTop: false,
+            search: false,
+            view: false
         };
 
         var inlineNavigationOptions = {};
@@ -66,14 +75,31 @@ var base = {
                     var rowId = jQuery('#' + options.table).jqGrid('getGridParam', 'selrow');
                     location.href = '/' + options.service + '/' + rowId;
                 };
-                pagerOptions.edit = false;
+                pagerOptions.add = true;
+                pagerOptions.addfunc = function() {
+                    location.href = '/' + options.service + '/new';
+                };
+                pagerOptions.edit = true;
+                pagerOptions.editfunc = function() {
+                    var rowId = jQuery('#' + options.table).jqGrid('getGridParam', 'selrow');
+                    location.href = '/' + options.service + '/' + rowId;
+                };
                 break;
+
             case 'popup':
+                options.editurl = '/services/' + options.service + '.json';
+                options.ondblClickRow = function() {
+                    jQuery('#edit_table').click();
+                };
                 pagerOptions.edit = true;
                 pagerOptions.add = true;
                 break;
+
             case 'inline':
                 pagerOptions.edit = false;
+                options.ondblClickRow = function() {
+                    jQuery('#table_iledit').click();
+                };
 
                 inlineNavigationOptions.edit = true;
                 inlineNavigationOptions.add = true;
@@ -88,12 +114,13 @@ var base = {
                     useDefValues: true,
                     addRowParams: {
                         url: '/services/' + options.service + '.json',
-                        mtype: 'put',
+                        mtype: 'put'
 
                     }
                 };
 
                 break;
+
             default:
                 // error
                 break;
@@ -101,7 +128,7 @@ var base = {
         }
 
         jQuery($tbl).jqGrid(options);
-        jQuery($tbl).jqGrid('navGrid', '#' + options.pager, pagerOptions, editOptions, {}, deleteOptions);
+        jQuery($tbl).jqGrid('navGrid', '#' + options.pager, pagerOptions, editOptions, addOptions, deleteOptions);
         if (options.editType == 'inline')
             jQuery($tbl).jqGrid('inlineNav', '#' + options.pager, inlineNavigationOptions);
 
