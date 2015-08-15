@@ -26,7 +26,7 @@ $(function() {
         colNames: colNames,
         colModel: colModel,
         sortname: 'firstName',
-        editType: 'inline'
+        editType: 'popup'
     };
 
     options.table = 'table';

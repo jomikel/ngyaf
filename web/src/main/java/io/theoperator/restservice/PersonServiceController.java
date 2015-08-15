@@ -74,8 +74,12 @@ public class PersonServiceController {
         return this.personService.getBean(Long.valueOf(id));
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
-    public Person updatePerson(@RequestBody Person person) {
+    @RequestMapping(
+            method = RequestMethod.PUT,
+            produces = {"application/json", "application/xml"},
+            consumes = {"application/x-www-form-urlencoded; charset=UTF-8"}
+    )
+    public Person updatePerson(@ModelAttribute Person person) {
         return this.personService.save(person);
     }
 

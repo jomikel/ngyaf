@@ -3,13 +3,13 @@
  */
 
 var base = {
-    jqgrid: function(options) {
+    jqgrid: function (options) {
 
         var $griddiv = jQuery('#griddiv');
         var $tbl = jQuery('<table />').attr({id: options.table}).appendTo($griddiv);
         var $pager = jQuery('<div />').attr({id: options.table + 'Pager'}).appendTo($griddiv);
 
-        if(options.datatype == null)
+        if (options.datatype == null)
             options.datatype = 'json';
 
         options.url = '/services/' + options.service + '/page.' + options.datatype;
@@ -17,6 +17,12 @@ var base = {
         options.height = 'auto';
         options.shrinkToFit = true;
         options.autowidth = true;
+        options.serializeRowData = function (data) {
+            delete data.oper;
+            if(data.id.substr(0, 3) == "jqg")
+                delete data.id;
+            return data;
+        };
 
         var deleteOptions = {
             url: '/services/' + options.service + '/',
@@ -27,14 +33,14 @@ var base = {
             onclickSubmit: function (rp_ge) {
                 var rowId = $(this).jqGrid('getGridParam', 'selrow');
                 rp_ge.url += rowId;
-                return { rr: rowId };
+                return {rr: rowId};
             }
         };
 
         var editOptions = {
             url: '/services/' + options.service + '/',
             mtype: 'PUT',
-            serializeEditData: function(rp_ge) {
+            serializeEditData: function (rp_ge) {
                 //alert(rp_ge);
                 return JSON.stringify(rp_ge);
             },
@@ -54,9 +60,9 @@ var base = {
 
         var inlineNavigationOptions = {};
 
-        switch(options.editType) {
+        switch (options.editType) {
             case 'form':
-                options.ondblClickRow = function() {
+                options.ondblClickRow = function () {
                     var rowId = jQuery('#' + options.table).jqGrid('getGridParam', 'selrow');
                     location.href = '/' + options.service + '/' + rowId;
                 };
@@ -64,6 +70,7 @@ var base = {
                 break;
             case 'popup':
                 pagerOptions.edit = true;
+                pagerOptions.add = true;
                 break;
             case 'inline':
                 pagerOptions.edit = false;
@@ -72,12 +79,17 @@ var base = {
                 inlineNavigationOptions.add = true;
                 inlineNavigationOptions.save = true;
                 inlineNavigationOptions.cancel = true;
-                inlineNavigationOptions.editParams = {};
+                inlineNavigationOptions.editParams = {
+                    url: '/services/' + options.service + '.json',
+                    mtype: 'put'
+                };
                 inlineNavigationOptions.addParams = {
+
                     useDefValues: true,
                     addRowParams: {
-                        url: '/' + options.service,
-                        mtype: 'post'
+                        url: '/services/' + options.service + '.json',
+                        mtype: 'put',
+
                     }
                 };
 
@@ -89,9 +101,9 @@ var base = {
         }
 
         jQuery($tbl).jqGrid(options);
-        jQuery($tbl).jqGrid('navGrid', '#'+options.pager, pagerOptions, editOptions, {}, deleteOptions);
+        jQuery($tbl).jqGrid('navGrid', '#' + options.pager, pagerOptions, editOptions, {}, deleteOptions);
         if (options.editType == 'inline')
-            jQuery($tbl).jqGrid('inlineNav', '#'+options.pager, inlineNavigationOptions);
+            jQuery($tbl).jqGrid('inlineNav', '#' + options.pager, inlineNavigationOptions);
 
     }
 };
@@ -107,10 +119,18 @@ function send() {
 function onInit() {
     var wsUri = 'ws://localhost:8080/websocket/myHandler';
     websocket = new WebSocket(wsUri);
-    websocket.onopen = function(evt) { onOpen(evt) };
-    websocket.onclose = function(evt) { onClose(evt) };
-    websocket.onmessage = function(evt) { onMessage(evt) };
-    websocket.onerror = function(evt) { onError(evt) };
+    websocket.onopen = function (evt) {
+        onOpen(evt)
+    };
+    websocket.onclose = function (evt) {
+        onClose(evt)
+    };
+    websocket.onmessage = function (evt) {
+        onMessage(evt)
+    };
+    websocket.onerror = function (evt) {
+        onError(evt)
+    };
 }
 
 // only for websocket tests
